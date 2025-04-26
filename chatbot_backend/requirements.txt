@@ -1,0 +1,17 @@
+dotenv==0.9.9
+Flask==3.1.0
+flask-cors==5.0.1
+huggingface-hub==0.30.2
+langchain==0.3.23
+langchain-community==0.3.21
+langchain-core==0.3.51
+langchain-google-genai==2.1.2
+langchain-huggingface==0.1.2
+pydantic==2.11.3
+pymongo==4.12.0
+requests==2.32.3
+transformers==4.41.2  # Required for `pipeline("summarization")`
+google-generativeai==0.3.2  # Required for `ChatGoogleGenerativeAI`
+flask-login==0.6.3  # Recommended for session management
+gunicorn==21.2.0  # For production deployment
+uvicorn==0.27.0  # If using FastAPI-style workers
