@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+# ASHA AI Chatbot Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This directory contains the **React** frontend for the ASHA AI Chatbot. It provides the user interface for registration, login, and chatting with the Asha career guidance bot.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- **Login & Registration** forms with client-side validation
+- **Chat UI** for interacting with the Asha chatbot
+- **Responsive Design** using Tailwind CSS (or your chosen framework)
+- **Environment-based API proxy** in development for seamless backend integration
+- **Production Build** ready for deployment (served by Flask or any static host)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📦 Prerequisites
 
-### `npm test`
+- **Node.js** ≥ v18
+- **npm** (or **yarn**)
+- **Environment Variables** (for production API endpoint)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🛠 Installation & Development
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Navigate to the frontend folder**
+   ```bash
+   cd client
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Install dependencies**
+   ```bash
+   npm ci
+   # or yarn install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Development Server**
+   ```bash
+   npm start
+   ```
+   - Runs the app in development mode at `http://localhost:3000`
+   - The React dev server proxies API requests to the backend (port 5000) via the `proxy` setting in `package.json`.
 
-### `npm run eject`
+4. **Environment Variables for Development**
+   In `client/.env.development`, you can define variables:
+   ```ini
+   REACT_APP_API_URL=http://localhost:5000
+   ```
+   These are automatically loaded by Create React App.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## ⚙️ Available Scripts
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Inside the `client` directory, you can run:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+| Command         | Description                                    |
+|-----------------|------------------------------------------------|
+| `npm start`     | Starts the development server                  |
+| `npm run build` | Builds the app for production into `/build`    |
+| `npm test`      | Runs the test suite (if configured)            |
+| `npm run eject` | Ejects CRA configuration (one-way operation)   |
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📂 Project Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+client/
+├── public/              # Static HTML, manifest, favicon
+│   └── index.html       # Main HTML page
+├── src/                 # React application source
+│   ├── api.js           # API helper (fetch/axios with credentials)
+│   ├── components/      # Reusable UI components
+│   ├── pages/           # Route-based pages (Login, Register, Chat)
+│   ├── App.jsx          # App root and Router setup
+│   ├── index.js         # Entry point for ReactDOM
+│   └── styles/          # Tailwind or CSS files
+├── .env.development     # Dev environment variables
+├── package.json         # Project metadata & scripts
+└── tailwind.config.js   # (optional) Tailwind CSS configuration
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🛡️ API Integration
 
-### Analyzing the Bundle Size
+- All API calls should use the `REACT_APP_API_URL` environment variable.
+- Ensure `credentials: 'include'` (or `axios.defaults.withCredentials = true`) is set to allow cookie-based sessions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Example (`src/api.js`):
+```js
+const API = process.env.REACT_APP_API_URL;
 
-### Making a Progressive Web App
+export async function login(username, password) {
+  const res = await fetch(`${API}/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ username, password }),
+  });
+  return res.json();
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 📦 Production Build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. **Build**
+   ```bash
+   npm run build
+   ```
+   - Outputs optimized static files to `client/build`.
 
-### Deployment
+2. **Serve Static Files**
+   - You can serve `client/build` from any static hosting service (Netlify, Vercel, S3) or let the Flask backend serve it.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
