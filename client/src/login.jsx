@@ -25,7 +25,7 @@ export default function AuthPage() {
   
     const endpoint = isLogin ? "login" : "register";
   
-    const response = await fetch(`http://localhost:5000/${endpoint}`, {
+    const response = await fetch(`http://localhost:5000/api${endpoint}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
