@@ -210,7 +210,7 @@ def get_user_details(email):
     return None
 from flask import make_response
 
-@app.route("/register", methods=["POST"])
+@app.route("/api/register", methods=["POST"])
 def register():
     data = request.get_json()
     email = data.get("email")
@@ -240,7 +240,7 @@ def register():
     return response, 201
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/api/login", methods=["POST"])
 def login():
     data = request.get_json()
     email = data.get("email")
@@ -358,7 +358,7 @@ def create_system_prompt(user_details):
 
 from langchain.schema import SystemMessage, HumanMessage
 
-@app.route("/chat", methods=["POST"])
+@app.route("/api/chat", methods=["POST"])
 def chat():
     user_input = request.json.get("message", "").strip()
     session_id = request.cookies.get("user_email")
